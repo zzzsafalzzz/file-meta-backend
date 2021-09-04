@@ -1,0 +1,9 @@
+node_modules/
+
+logs/
+coverage/
+yarn-error.log
+
+.pgdata
+
+.env
