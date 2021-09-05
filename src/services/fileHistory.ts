@@ -22,7 +22,7 @@ export async function saveFile(file: Omit<FileHistoryEntity, 'id' | 'updatedAt' 
   logger.info('Saving new file into DB.');
   const data = await new FileHistory(file).save();
 
-  logger.info(`Saved ${data.id} file into DB.`);
+  logger.info(`Saved new file with id '${data.id}' into DB.`);
 
   return { data };
 }
