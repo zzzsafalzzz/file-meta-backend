@@ -18,7 +18,7 @@ export async function getFileHistory(req: Request, res: Response) {
  * @param {Request} req
  * @param {Response} res
  */
- export async function addToFileHistory(req: Request, res: Response) {
+export async function addToFileHistory(req: Request, res: Response) {
   return saveFile(req.body).then((data) => res.status(200).json(data));
 }
 
