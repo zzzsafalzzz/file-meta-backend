@@ -1,4 +1,5 @@
 import HttpStatus from 'http-status-codes';
+import { ErrorReport, ValidationError } from 'joi';
 import { Response, Request, NextFunction } from 'express';
 
 import logger from '../utils/logger';
@@ -25,6 +26,18 @@ export function notFoundHandler(req: Request, res: Response, next: NextFunction)
  */
 export async function defaultError(err: any, req: Request, res: Response, next: NextFunction) {
   logger.error('An error occurred: ', err);
+
+  if (err.isJoi) {
+    const validationError = err as ValidationError;
+
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: 'Request validation error!',
+      data: validationError.details?.map(({ message, path }) => ({ path, message }))
+    });
+
+    return;
+  }
 
   res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
     code: HttpStatus.INTERNAL_SERVER_ERROR,
